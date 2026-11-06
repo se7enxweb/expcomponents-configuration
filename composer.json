@@ -37,12 +37,16 @@
         ]
     },
     "description": "A component that allows you to use configuration files in different formats. The formats include the standard .ini file, and an array based format.",
-    "homepage": "https://github.com/zetacomponents",
+    "homepage": "https://github.com/se7enxweb/expcomponents-configuration",
     "license": "Apache-2.0",
-    "name": "zetacomponents/configuration",
+    "name": "se7enxweb/expcomponents-configuration",
     "type": "library",
     "require": {
-        "zetacomponents/base": "~1.8"
+        "php": ">=7.1",
+        "se7enxweb/expcomponents-base": "~1.8"
+    },
+    "replace": {
+        "zetacomponents/configuration": "self.version"
     },
     "require-dev": {
         "zetacomponents/unit-test": "*"
