@@ -35,7 +35,7 @@ class ezcConfigurationManagerDelayedInitTest extends ezcTestCase
 {
     private $dbg;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $cfg = ezcConfigurationManager::getInstance();
         $cfg->reset();
@@ -50,7 +50,7 @@ class ezcConfigurationManagerDelayedInitTest extends ezcTestCase
 
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite("ezcConfigurationManagerDelayedInitTest");
+        return new \PHPUnit\Framework\TestSuite("ezcConfigurationManagerDelayedInitTest");
     }
 }
 

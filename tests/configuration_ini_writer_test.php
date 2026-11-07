@@ -33,7 +33,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
 {
     private $tempDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if ( !ezcBaseFeatures::hasExtensionSupport( 'posix' ) )
         {
@@ -42,7 +42,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
         $this->tempDir = $this->createTempDir( 'ezcConfigurationIniWriterTest' );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->removeTempDir();
     }
@@ -51,7 +51,9 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
     {
         $backend = new ezcConfigurationIniWriter();
         $backend->setOptions( array ( 'useComments' => true ) );
+        $this->assertSame( true, $backend->getOptions()['useComments'] );
         $backend->setOptions( array ( 'useComments' => false ) );
+        $this->assertSame( false, $backend->getOptions()['useComments'] );
     }
 
     public function testConfigSettingUseCommentsWrongType()
@@ -72,6 +74,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
     {
         $backend = new ezcConfigurationIniWriter();
         $backend->setOptions( array ( 'permissions' => 0660 ) );
+        $this->assertSame( 0660, $backend->getOptions()['permissions'] );
     }
 
     public function testConfigSettingPermissionsWrongType()
@@ -290,6 +293,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
 
         $backend = new ezcConfigurationIniWriter( $this->tempDir . '/one-group-no-comments.ini', $test );
         $backend->setOptions( array ( 'useComments' => false ) );
+        $this->assertSame( false, $backend->getOptions()['useComments'] );
         $backend->save();
 
         $backend = new ezcConfigurationIniReader( $this->tempDir . '/one-group-no-comments.ini' );
@@ -339,8 +343,8 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
                 'Hex4' => 0x11189196,
                 'TextColor' => 66302,
                 'Octal1' => 01,
-                'Octal2' => 0458,
-                'Permission' => 0438,
+                'Octal2' => 045, // was 0458: PHP 5 stopped at the 8, PHP 7 refuses it
+                'Permission' => 043, // was 0438, likewise
                 'Float1' => 0.2,
                 'Float2' => .8123,
                 'Float3' => 42.,
@@ -409,7 +413,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
         $backend = new ezcConfigurationIniReader( $this->tempDir . '/string-formats.ini' );
         $return = $backend->load();
         $this->assertEquals( $test, $return );
-        $this->assertEquals( file_get_contents( 'Configuration/tests/files/string-formats-test.ini' ), file_get_contents( $this->tempDir . '/string-formats.ini' ) );
+        $this->assertEquals( file_get_contents( __DIR__ . '/files/string-formats-test.ini' ), file_get_contents( $this->tempDir . '/string-formats.ini' ) );
     }
 
     public function test2D()
@@ -480,6 +484,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
         $backend = new ezcConfigurationIniWriter( $this->tempDir . '/empty.ini', new ezcConfiguration() );
         $oldUmask = umask( 0 );
         $backend->setOptions( array ( 'permissions' => 0660 ) );
+        $this->assertSame( 0660, $backend->getOptions()['permissions'] );
         $backend->save();
         umask( $oldUmask );
         $stat = stat( $this->tempDir . '/empty.ini' );
@@ -505,7 +510,7 @@ class ezcConfigurationIniWriterTest extends ezcTestCase
 
     public static function suite()
     {
-         return new PHPUnit_Framework_TestSuite( 'ezcConfigurationIniWriterTest' );
+         return new \PHPUnit\Framework\TestSuite( 'ezcConfigurationIniWriterTest' );
     }
 
 }

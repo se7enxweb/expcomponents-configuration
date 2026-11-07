@@ -28,7 +28,7 @@ class testDelayedInitConfigurationManager implements ezcBaseConfigurationInitial
 {
     static function configureObject( $object )
     {
-        $object->init( 'ezcConfigurationIniReader', 'Configuration/tests/files', array() );
+        $object->init( 'ezcConfigurationIniReader', __DIR__ . '/files', array() );
     }
 }
 ?>

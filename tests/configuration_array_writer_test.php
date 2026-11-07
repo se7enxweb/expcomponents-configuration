@@ -33,7 +33,7 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
 {
     private $tempDir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         if ( !ezcBaseFeatures::hasExtensionSupport( 'posix' ) )
         {
@@ -42,7 +42,7 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
         $this->tempDir = $this->createTempDir( 'ezcConfigurationArrayWriterTest' );
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->removeTempDir();
     }
@@ -51,7 +51,9 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
     {
         $backend = new ezcConfigurationArrayWriter();
         $backend->setOptions( array ( 'useComments' => true ) );
+        $this->assertSame( true, $backend->getOptions()['useComments'] );
         $backend->setOptions( array ( 'useComments' => false ) );
+        $this->assertSame( false, $backend->getOptions()['useComments'] );
     }
 
     public function testConfigSettingUseCommentsWrongType()
@@ -72,6 +74,7 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
     {
         $backend = new ezcConfigurationArrayWriter();
         $backend->setOptions( array ( 'permissions' => 0660 ) );
+        $this->assertSame( 0660, $backend->getOptions()['permissions'] );
     }
 
     public function testConfigSettingPermissionsWrongType()
@@ -274,6 +277,7 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
 
         $backend = new ezcConfigurationArrayWriter( $this->tempDir . '/one-group-no-comments.php', $test );
         $backend->setOptions( array ( 'useComments' => false ) );
+        $this->assertSame( false, $backend->getOptions()['useComments'] );
         $backend->save();
 
         $backend = new ezcConfigurationArrayReader( $this->tempDir . '/one-group-no-comments.php' );
@@ -417,6 +421,7 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
         $backend = new ezcConfigurationArrayWriter( $this->tempDir . '/empty.php', new ezcConfiguration() );
         $oldUmask = umask( 0 );
         $backend->setOptions( array ( 'permissions' => 0660 ) );
+        $this->assertSame( 0660, $backend->getOptions()['permissions'] );
         $backend->save();
         umask( $oldUmask );
         $stat = stat( $this->tempDir . '/empty.php' );
@@ -476,7 +481,7 @@ class ezcConfigurationArrayWriterTest extends ezcTestCase
 
     public static function suite()
     {
-         return new PHPUnit_Framework_TestSuite( 'ezcConfigurationArrayWriterTest' );
+         return new \PHPUnit\Framework\TestSuite( 'ezcConfigurationArrayWriterTest' );
     }
 
 }
