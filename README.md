@@ -2,7 +2,7 @@
 
 A component that allows you to use configuration files in different formats. The formats include the standard .ini file, and an array based format.
 
-This is the Exponential fork of [zetacomponents/Configuration](https://github.com/zetacomponents/Configuration),
+This is the Exponential Components fork of [zetacomponents/Configuration](https://github.com/zetacomponents/Configuration),
 maintained by 7x (se7en.x) and the Exponential Foundation for Exponential and anyone else
 who uses the Zeta Components Configuration component on current PHP versions. All credit for the
 component goes to the Zeta Components authors listed in `composer.json` and `CREDITS`;
